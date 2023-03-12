@@ -1,7 +1,9 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +36,36 @@ public class CategoryController {
      * 列表
      */
     @RequestMapping("/list")
-    //@RequiresPermissions("product:category:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
+    public R listWithTree(){
+        List<CategoryEntity> entities = categoryService.listWithTree();
 
-        return R.ok().put("page", page);
+        List<CategoryEntity> level1Menus = entities.stream()
+                .filter(categoryEntity -> categoryEntity.getParentCid() == 0)
+                .map((menu) -> {
+                    menu.setChildren(getChildrens(menu, entities));
+                    return menu;
+                })
+                .sorted((menu1, menu2) -> {
+                    return (menu1.getSort() == null ? 0 : menu1.getSort()) - (menu2.getSort() == null ? 0 : menu2.getSort());
+                })
+                .collect(Collectors.toList());
+
+        return R.ok().put("data", level1Menus);
+    }
+
+    private List<CategoryEntity> getChildrens(CategoryEntity menu, List<CategoryEntity> entities) {
+
+        List<CategoryEntity> collect = entities.stream()
+                .filter(categoryEntity -> categoryEntity.getParentCid() == menu.getCatId())
+                .map((subMenu) -> {
+                    subMenu.setChildren(getChildrens(subMenu, entities));
+                    return subMenu;
+                })
+                .sorted((menu1, menu2) -> {
+                    return (menu1.getSort() == null ? 0 : menu1.getSort()) - (menu2.getSort() == null ? 0 : menu2.getSort());
+                })
+                .collect(Collectors.toList());
+        return collect;
     }
 
 

@@ -1,13 +1,35 @@
+#spring:
+#  datasource:
+#    username: root
+#    password: A10251123a
+#    url: jdbc:mysql://123.249.16.77:3306/gulimall_pms
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: http://123.249.16.77/:8848
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/**/*.xml
+#  global-config:
+#    db-config:
+#      id-type: auto
+#server:
+#  port: 9000
+
+
+
 spring:
   datasource:
     username: root
     password: A10251123a
     url: jdbc:mysql://123.249.16.77:3306/gulimall_pms
     driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto
-server:
-  port: 9000
+  cloud:
+    nacos:
+      config:
+        server-addr: 123.249.16.77:8848
+        group: dev
+        namespace: product
+  config:
+    import:
+      - nacos:product.yaml?refresh=true
