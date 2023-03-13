@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 123.249.16.77:8848
+        group: dev
+        namespace: gateway
+    gateway:
+      routes:
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
+  config:
+    import:
+      - nacos:gateway.yaml?refresh=true
+  application:
+    name: gulimall-gateway
+server:
+  port: 88
