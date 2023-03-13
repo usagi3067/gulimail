@@ -35,7 +35,7 @@ public class CategoryController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @RequestMapping("/list/tree")
     public R listWithTree(){
         List<CategoryEntity> entities = categoryService.listWithTree();
 
