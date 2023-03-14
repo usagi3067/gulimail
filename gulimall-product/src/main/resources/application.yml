@@ -44,4 +44,10 @@ mybatis-plus:
 logging:
   level:
     com.atguigu.gulimall.product: debug
+alibaba:
+  cloud:
+    oss:
+      endpoint: oss-cn-guangzhou.aliyuncs.com
+    access-key: LTAI5tExTnZQaKk5mSic7c6P
+    secret-key: uZnq8865QhLiLBgsUYmezE6xrKWUwG
 
