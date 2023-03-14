@@ -26,7 +26,7 @@ import com.atguigu.common.utils.R;
  */
 @RestController
 @RequestMapping("product/brand")
-public class BrandController {
+public class  BrandController {
     @Autowired
     private BrandService brandService;
 
