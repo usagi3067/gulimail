@@ -18,3 +18,5 @@ buildNumber.properties
 .idea
 
 **/.gitignore
+
+/gulimall-product/src/main/resources/application.yml
